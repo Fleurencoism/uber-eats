@@ -1,24 +1,28 @@
-import logo from './logo.svg';
-import './App.css';
+import { Layout, Image } from "antd";
+import AppRoutes from "./components/Routes";
+import SideMenu from "./components/SideMenu";
+
+const{Sider, Content, Footer} = Layout;
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Layout>
+      <Sider style={{backgroundColor: 'white'}}>
+        <Image
+        src="https://logos-world.net/wp-content/uploads/2020/11/Uber-Eats-Symbol.jpg"
+        preview={false}
+        />
+        <SideMenu />
+      </Sider>
+      <Layout>
+        <Content>
+          <AppRoutes />
+        </Content>
+        <Footer style={{textAlign: 'center'}}>
+          Uber Eats DashBoard @2023
+        </Footer>
+      </Layout>
+    </Layout>
   );
 }
 
