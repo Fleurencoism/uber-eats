@@ -18,8 +18,6 @@ const CreateMenuItem = () => {
             return;
         }
         message.success('Menu item created!')
-        
-
     };
     return (
         <Card title={'Create New Item'} style= {styles.page}>

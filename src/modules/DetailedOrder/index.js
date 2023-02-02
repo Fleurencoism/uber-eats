@@ -49,7 +49,8 @@ const DeatailedOrder = () => {
                 
             <div style={styles.buttonsContainer}>
                 <Button
-                    block                    
+                    block 
+                                       
                     type='primary'
                     size='large'
                     style={styles.button}
