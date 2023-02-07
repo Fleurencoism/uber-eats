@@ -1,41 +1,49 @@
+import { useState, useEffect } from "react";
 import{Card, Table, Tag} from "antd";
-import orders from'../../data/data/dashboard/orders.json';
 import { useNavigate } from "react-router-dom";
+import { DataStore } from "aws-amplify";
+import{Order}from '../../models'
 
 const Orders = () => {
+
+    const [orders,setOrders] = useState([]);
+
+    useEffect(()=>{
+        DataStore.query(Order).then(setOrders);
+    });
+
+    //console.log(orders);
 
     const navigate = useNavigate();
     
     const renderOrderStatus = (orderStatus) => {
-        let color = '';
+        const statusToColor = {
+            PENDING: 'blue',
+            COMPLETED: 'green',
+            ACCEPTED: 'orange',
+            DECLINED: 'red',
+        };
 
-        if(orderStatus === 'Accepted'){
-            color = 'green';
-        }else if(orderStatus === 'Pending'){
-            color = 'orange';
-        }else {
-            color = 'red';
-        }
-        return <Tag color ={color}>{orderStatus}</Tag>
+        return <Tag color ={statusToColor[orderStatus]}>{orderStatus}</Tag>
     };
     const tableColumns = [
         {
-            title: 'ID',
-            dataIndex: 'orderID',
-            key: 'orderID',
+            title: 'Id',
+            dataIndex: 'id',
+            key: 'id',
 
         },
         {
-            title: 'Delivery Address',
-            dataIndex: 'deliveryAddress',
-            key: 'deliveryAddress',
+            title: 'Created At',
+            dataIndex: 'createdAt',
+            key: 'createdAt',
 
         },
         {
-            title: 'Price',
-            dataIndex: 'price',
-            key: 'price',
-            render: (price) => `$${price}`
+            title: 'Total',
+            dataIndex: 'total',
+            key: 'total',
+            render: (total) => `$${total.toFixed(2)}`
 
         },
         {
@@ -51,9 +59,9 @@ const Orders = () => {
             <Table
             dataSource={orders}
             columns={tableColumns}
-            rowKey= 'orderID'
+            rowKey= 'id'
             onRow={(order) => ({
-                onClick: () => navigate(`order/${order.orderID}`)
+                onClick: () => navigate(`order/${order.id}`)
             })}
             />
         </Card>
